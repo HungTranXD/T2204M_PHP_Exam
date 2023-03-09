@@ -6,138 +6,59 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Book List</title>
-    <style>
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 50px;
-        }
-
-        h1 {
-            margin-bottom: 20px;
-        }
-
-        table {
-            border-collapse: collapse;
-            width: 80%;
-            margin-bottom: 30px;
-        }
-
-        th, td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #f2f2f2;
-            font-weight: bold;
-        }
-
-        tr:hover {
-            background-color: #f5f5f5;
-        }
-
-        form {
-            margin-bottom: 30px;
-        }
-
-        label {
-            margin-right: 10px;
-        }
-
-        input[type="text"] {
-            padding: 5px;
-            border-radius: 3px;
-            border: 1px solid #ccc;
-        }
-
-        input[type="submit"] {
-            padding: 5px 10px;
-            border-radius: 3px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-        }
-
-        .pagination {
-            display: flex;
-            justify-content: center;
-        }
-
-        .pagination ul {
-            display: flex;
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .pagination li {
-            margin: 0 5px;
-        }
-
-        .pagination li a {
-            padding: 5px 10px;
-            border-radius: 3px;
-            background-color: #f2f2f2;
-            color: #007bff;
-            text-decoration: none;
-            border: none;
-            cursor: pointer;
-        }
-
-        .pagination li.active a {
-            background-color: #007bff;
-            color: #fff;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 </head>
 <body>
-<div class="container">
-    <h1>Book List</h1>
 
-    <!-- Search form -->
-    <form action="{{url('/')}}" method="get">
-        <label for="search">Search:</label>
-        <input type="text" id="search" name="search" value="{{ app("request")->input("search") }}">
-        <input type="submit" value="Search">
-    </form>
+    <div class="container">
+        <div class="row justify-content-between">
+            <div class="rol">
+                <h1 class="display-4">Book List - {{$data->total()}} books</h1>
+            </div>
+            <div class="row">
+                <form class="form-inline" action="{{url('/')}}" method="get">
+                    <div class="form-group mx-sm-3 mb-2">
+                        <label for="inputPassword2" class="sr-only">Search</label>
+                        <input name="search" type="text" class="form-control" id="inputPassword2" placeholder="Search by title...">
+                    </div>
+                    <button type="submit" class="btn btn-primary mb-2">Search</button>
+                </form>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Author</th>
+                    <th scope="col">ISBN</th>
+                    <th scope="col">Published Year</th>
+                    <th scope="col">Available</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach($data as $book)
+                    <tr>
+                        <th scope="row">{{$book->id}}</th>
+                        <td>{{$book->title}}</td>
+                        <td>{{$book->Author->name}}</td>
+                        <td>{{$book->ISBN}}</td>
+                        <td>{{$book->pub_year}}</td>
+                        <td>{{$book->available}}</td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
 
-    <!-- Book table -->
-    <table>
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Author</th>
-            <th>ISBN</th>
-            <th>Published Year</th>
-            <th>Available</th>
-        </tr>
-        </thead>
-        <tbody>
-        <!-- Book rows -->
-        @foreach($data as $book)
-            <tr>
-                <td>{{$book->id}}</td>
-                <td>{{$book->title}}</td>
-                <td>{{$book->Author->name}}</td>
-                <td>{{$book->ISBN}}</td>
-                <td>{{$book->pub_year}}</td>
-                <td>{{$book->available}}</td>
-            </tr>
-        @endforeach
-        </tbody>
-    </table>
-
-    <!-- Pagination -->
-    <div class="pagination">
-        <ul>
-            {!! $data->appends( app("request")->input() )->links("pagination::bootstrap-4") !!}
-        </ul>
+            <div class="d-flex justify-content-center">
+                {!! $data->appends( app("request")->input() )->links("pagination::bootstrap-4") !!}
+            </div>
+        </div>
     </div>
-</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+
 </body>
 </html>
