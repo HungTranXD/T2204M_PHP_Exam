@@ -20,6 +20,7 @@
                     <div class="form-group mx-sm-3 mb-2">
                         <label for="inputPassword2" class="sr-only">Search</label>
                         <input name="search" type="text" class="form-control" id="inputPassword2" placeholder="Search by title..." value="{{ app('request')->input('search') }}">
+                        <input name="page" type="hidden"  value="1">
                     </div>
                     <button type="submit" class="btn btn-primary mb-2">Search</button>
                 </form>
