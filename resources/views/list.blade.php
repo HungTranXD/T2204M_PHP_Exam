@@ -19,7 +19,7 @@
                 <form class="form-inline" action="{{url('/')}}" method="get">
                     <div class="form-group mx-sm-3 mb-2">
                         <label for="inputPassword2" class="sr-only">Search</label>
-                        <input name="search" type="text" class="form-control" id="inputPassword2" placeholder="Search by title...">
+                        <input name="search" type="text" class="form-control" id="inputPassword2" placeholder="Search by title..." value="{{ app('request')->input('search') }}">
                     </div>
                     <button type="submit" class="btn btn-primary mb-2">Search</button>
                 </form>
